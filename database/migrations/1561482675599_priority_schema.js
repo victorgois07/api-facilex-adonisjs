@@ -7,6 +7,10 @@ class PrioritySchema extends Schema {
   up () {
     this.create('priorities', (table) => {
       table.increments()
+      table
+        .string('description', 100)
+        .notNullable()
+        .unique()
       table.timestamps()
     })
   }

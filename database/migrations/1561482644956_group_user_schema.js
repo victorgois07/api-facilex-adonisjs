@@ -1,12 +1,15 @@
 'use strict'
 
-/** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
 class GroupUserSchema extends Schema {
   up () {
-    this.create('group_users', (table) => {
+    this.create('group_users', table => {
       table.increments()
+      table
+        .string('description', 100)
+        .notNullable()
+        .unique()
       table.timestamps()
     })
   }

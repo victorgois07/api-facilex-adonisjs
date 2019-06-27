@@ -1,92 +1,48 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Address = use('App/Models/Address')
 
-/**
- * Resourceful controller for interacting with addresses
- */
 class AddressController {
-  /**
-   * Show a list of all addresses.
-   * GET addresses
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    // eslint-disable-next-line no-return-await
+    return await Address.query()
+      .orderBy('id', 'desc')
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Render a form to be used for creating a new address.
-   * GET addresses/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request }) {
+    const data = request.all()
+    // eslint-disable-next-line no-return-await
+    return await Address.create(data)
   }
 
-  /**
-   * Create/save a new address.
-   * POST addresses
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show ({ params }) {
+    // eslint-disable-next-line no-return-await
+    return await Address.query()
+      .orderBy('id', 'desc')
+      .with('entity', builder => {
+        builder.rename()
+      })
+      .with('city', builder => {
+        builder.rename()
+      })
+      .where('id', params.id)
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Display a single address.
-   * GET addresses/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.all()
+    const update = await Address.find(params.id)
+    update.merge(data)
+    update.update()
+    return update
   }
 
-  /**
-   * Render a form to update an existing address.
-   * GET addresses/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update address details.
-   * PUT or PATCH addresses/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a address with id.
-   * DELETE addresses/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const destroy = await Address.find(params.id)
+    return destroy.delete()
   }
 }
 

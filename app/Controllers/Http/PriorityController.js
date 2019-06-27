@@ -1,92 +1,45 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Priority = use('App/Models/Priority')
 
-/**
- * Resourceful controller for interacting with priorities
- */
 class PriorityController {
-  /**
-   * Show a list of all priorities.
-   * GET priorities
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    // eslint-disable-next-line no-return-await
+    return await Priority.query()
+      .orderBy('id', 'desc')
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Render a form to be used for creating a new priority.
-   * GET priorities/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request }) {
+    const data = request.all()
+    // eslint-disable-next-line no-return-await
+    return await Priority.create(data)
   }
 
-  /**
-   * Create/save a new priority.
-   * POST priorities
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show ({ params }) {
+    // eslint-disable-next-line no-return-await
+    return await Priority.query()
+      .orderBy('id', 'desc')
+      .with('ticket', builder => {
+        builder.rename()
+      })
+      .where('id', params.id)
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Display a single priority.
-   * GET priorities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.all()
+    const update = await Priority.find(params.id)
+    update.merge(data)
+    update.update()
+    return update
   }
 
-  /**
-   * Render a form to update an existing priority.
-   * GET priorities/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update priority details.
-   * PUT or PATCH priorities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a priority with id.
-   * DELETE priorities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const destroy = await Priority.find(params.id)
+    return destroy.delete()
   }
 }
 

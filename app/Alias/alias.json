@@ -1,0 +1,132 @@
+{
+  "address": [
+    "id",
+    "description as descricao",
+    "neighborhood as bairro",
+    "number as numbero",
+    "cep",
+    "city_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "city": [
+    "id",
+    "description as descricao",
+    "ibge",
+    "state_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "group_user": [
+    "id",
+    "description as descricao",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "plan": [
+    "id",
+    "description as descricao",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "course": [
+    "id",
+    "description as descricao",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "priority": [
+    "id",
+    "description as descricao",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "log": [
+    "id",
+    "description as descricao",
+    "user_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "state": [
+    "id",
+    "description as descricao",
+    "country as estado",
+    "initials as sigla",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "ticket": [
+    "id",
+    "description as descricao",
+    "subject as assunto",
+    "priority_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "flow_chart": [
+    "id",
+    "name as nome",
+    "text as texto",
+    "status",
+    "code_annotation as codigo_anotacao",
+    "article_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "entity": [
+    "id",
+    "social_reason as razao_social",
+    "description as descricao",
+    "cnpj",
+    "address_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "entity_plan": [
+    "id",
+    "expiration_date as vencimento",
+    "expiration_promotion as promocao_vencimento",
+    "licenses_quality as quantidade_licencas",
+    "discount as desconto",
+    "active as ativo",
+    "entity_id",
+    "plan_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "article": [
+    "id",
+    "name as nome",
+    "text as texto",
+    "version as versao",
+    "book as livro",
+    "part as parte",
+    "code as codigo",
+    "number as numero",
+    "type as tipo",
+    "url",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "token": [
+    "id",
+    "token",
+    "is_revoked",
+    "user_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
+  "user": [
+    "id",
+    "username",
+    "name as nome",
+    "password",
+    "email",
+    "phone",
+    "course_id",
+    "group_user_id",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ]
+}

@@ -1,92 +1,48 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const City = use('App/Models/City')
 
-/**
- * Resourceful controller for interacting with cities
- */
 class CityController {
-  /**
-   * Show a list of all cities.
-   * GET cities
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    // eslint-disable-next-line no-return-await
+    return await City.query()
+      .orderBy('id', 'desc')
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Render a form to be used for creating a new city.
-   * GET cities/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request }) {
+    const data = request.all()
+    // eslint-disable-next-line no-return-await
+    return await City.create(data)
   }
 
-  /**
-   * Create/save a new city.
-   * POST cities
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show ({ params }) {
+    // eslint-disable-next-line no-return-await
+    return await City.query()
+      .orderBy('id', 'desc')
+      .with('address', builder => {
+        builder.rename()
+      })
+      .with('state', builder => {
+        builder.rename()
+      })
+      .where('id', params.id)
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Display a single city.
-   * GET cities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.all()
+    const update = await City.find(params.id)
+    update.merge(data)
+    update.update()
+    return update
   }
 
-  /**
-   * Render a form to update an existing city.
-   * GET cities/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update city details.
-   * PUT or PATCH cities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a city with id.
-   * DELETE cities/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const destroy = await City.find(params.id)
+    return destroy.delete()
   }
 }
 

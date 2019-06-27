@@ -9,3 +9,9 @@ tmp
 
 # The development sqlite file
 database/development.sqlite
+.idea/vcs.xml
+.idea/codeStyles/
+.idea/dbnavigator.xml
+.idea/preferred-vcs.xml
+.idea/sonarlint/
+lib/

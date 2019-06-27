@@ -5,8 +5,18 @@ const Schema = use('Schema')
 
 class CitySchema extends Schema {
   up () {
-    this.create('cities', (table) => {
+    this.create('cities', table => {
       table.increments()
+      table
+        .string('description', 255)
+        .unique()
+      table
+        .integer('ibge', 20)
+        .notNullable()
+        .unique()
+      table
+        .integer('state_id')
+        .unsigned()
       table.timestamps()
     })
   }

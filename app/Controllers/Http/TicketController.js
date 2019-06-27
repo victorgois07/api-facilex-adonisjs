@@ -1,92 +1,45 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Ticket = use('App/Models/Ticket')
 
-/**
- * Resourceful controller for interacting with tickets
- */
 class TicketController {
-  /**
-   * Show a list of all tickets.
-   * GET tickets
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    // eslint-disable-next-line no-return-await
+    return await Ticket.query()
+      .orderBy('id', 'desc')
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Render a form to be used for creating a new ticket.
-   * GET tickets/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request }) {
+    const data = request.all()
+    // eslint-disable-next-line no-return-await
+    return await Ticket.create(data)
   }
 
-  /**
-   * Create/save a new ticket.
-   * POST tickets
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show ({ params }) {
+    // eslint-disable-next-line no-return-await
+    return await Ticket.query()
+      .orderBy('id', 'desc')
+      .with('priority', builder => {
+        builder.rename()
+      })
+      .where('id', params.id)
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Display a single ticket.
-   * GET tickets/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.all()
+    const update = await Ticket.find(params.id)
+    update.merge(data)
+    update.update()
+    return update
   }
 
-  /**
-   * Render a form to update an existing ticket.
-   * GET tickets/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update ticket details.
-   * PUT or PATCH tickets/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a ticket with id.
-   * DELETE tickets/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const destroy = await Ticket.find(params.id)
+    return destroy.delete()
   }
 }
 

@@ -1,92 +1,45 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const State = use('App/Models/State')
 
-/**
- * Resourceful controller for interacting with states
- */
 class StateController {
-  /**
-   * Show a list of all states.
-   * GET states
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    // eslint-disable-next-line no-return-await
+    return await State.query()
+      .orderBy('id', 'desc')
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Render a form to be used for creating a new state.
-   * GET states/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store ({ request }) {
+    const data = request.all()
+    // eslint-disable-next-line no-return-await
+    return await State.create(data)
   }
 
-  /**
-   * Create/save a new state.
-   * POST states
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show ({ params }) {
+    // eslint-disable-next-line no-return-await
+    return await State.query()
+      .orderBy('id', 'desc')
+      .with('city', builder => {
+        builder.rename()
+      })
+      .where('id', params.id)
+      .rename()
+      .fetch()
   }
 
-  /**
-   * Display a single state.
-   * GET states/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ params, request }) {
+    const data = request.all()
+    const update = await State.find(params.id)
+    update.merge(data)
+    update.update()
+    return update
   }
 
-  /**
-   * Render a form to update an existing state.
-   * GET states/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update state details.
-   * PUT or PATCH states/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a state with id.
-   * DELETE states/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const destroy = await State.find(params.id)
+    return destroy.delete()
   }
 }
 
