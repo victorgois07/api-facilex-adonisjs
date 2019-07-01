@@ -19,4 +19,6 @@ Route.group(() => {
   Route.resource('/api/state', 'StateController')
   Route.resource('/api/ticket', 'TicketController')
   Route.resource('/api/user', 'UserController')
+  Route.resource('/api/pagseguro', 'PagseguroController')
+  Route.post('/api/redirect/pagseguro', 'PagseguroController.redirectPagSeguro')
 }).middleware('auth')
