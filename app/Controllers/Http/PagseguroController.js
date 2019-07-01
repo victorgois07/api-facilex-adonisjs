@@ -1,5 +1,7 @@
 'use strict'
 
+const fs = require('fs')
+
 class PagseguroController {
   async index ({ request, response, view }) {}
 
@@ -16,6 +18,13 @@ class PagseguroController {
   async destroy ({ params, request, response }) {}
 
   async redirectPagSeguro ({ params, request, response }) {
+    const req = (request.all()).join(', ')
+    console.log(request.all())
+    const data = new Uint8Array(Buffer.from(req))
+    fs.writeFile('message.txt', data, (err) => {
+      if (err) throw err
+      console.log('The file has been saved!')
+    })
     return response.json(request.all())
   }
 }

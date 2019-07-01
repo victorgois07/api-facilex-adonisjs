@@ -3,6 +3,7 @@
 const Route = use('Route')
 
 Route.post('/api/sessions', 'SessionController.store')
+Route.post('/api/redirect/pagseguro', 'PagseguroController.redirectPagSeguro')
 
 Route.group(() => {
   Route.resource('/api/address', 'AddressController')
@@ -20,5 +21,4 @@ Route.group(() => {
   Route.resource('/api/ticket', 'TicketController')
   Route.resource('/api/user', 'UserController')
   Route.resource('/api/pagseguro', 'PagseguroController')
-  Route.post('/api/redirect/pagseguro', 'PagseguroController.redirectPagSeguro')
 }).middleware('auth')
