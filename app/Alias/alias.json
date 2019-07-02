@@ -117,6 +117,17 @@
     "created_at as criado",
     "updated_at as atualizado"
   ],
+  "payment": [
+    "id",
+    "user_id",
+    "code as codigo",
+    "payment_link as link_pagamento",
+    "barcode as codigo_barras",
+    "value as valor",
+    "due_date as vencimento",
+    "created_at as criado",
+    "updated_at as atualizado"
+  ],
   "user": [
     "id",
     "username",

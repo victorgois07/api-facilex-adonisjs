@@ -12,3 +12,4 @@ database/development.sqlite
 lib/
 .idea/
 database/seeds/
+config/drive.js
