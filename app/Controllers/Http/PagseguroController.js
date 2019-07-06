@@ -4,6 +4,7 @@ const Env = use('Env')
 const moment = require('moment')
 const axios = require('axios')
 const User = use('App/Models/User')
+const Payment = use('App/Models/Payment')
 
 class PagseguroController {
   async index ({ request, response, view }) {}
@@ -50,7 +51,15 @@ class PagseguroController {
         }
       })
         .then(async res => {
-          const boleto = res.data.boletos
+          const boleto = res.data.boletos[0]
+          await Payment.create({
+            code: boleto.code,
+            payment_link: boleto.paymentLink,
+            barcode: boleto.barcode,
+            due_date: boleto.dueDate,
+            value: valorBoleto,
+            user_id: auth.current.user.id
+          })
           resolve(boleto)
         })
         .catch(async e => {

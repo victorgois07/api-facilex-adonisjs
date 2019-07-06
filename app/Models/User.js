@@ -18,6 +18,10 @@ class User extends Model {
     })
   }
 
+  static get hidden () {
+    return ['password', 'created_at', 'updated_at', 'group_user_id', 'course_id', 'criado', 'atualizado']
+  }
+
   static scopeRename (query) {
     return query.select(Alias.user)
   }

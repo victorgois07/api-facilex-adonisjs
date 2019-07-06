@@ -11,6 +11,9 @@ class GroupUser extends Model {
     this.addHook('afterUpdate', 'GroupUserHook.AnswerUpdate')
     this.addHook('beforeUpdate', 'GroupUserHook.fitKeysUpdate')
   }
+  static get hidden () {
+    return ['id', 'created_at', 'updated_at', 'criado', 'atualizado']
+  }
   static scopeRename (query) {
     return query.select(Alias.group_user)
   }
