@@ -21,9 +21,6 @@ class PriorityController {
     // eslint-disable-next-line no-return-await
     return await Priority.query()
       .orderBy('id', 'desc')
-      .with('ticket', builder => {
-        builder.rename()
-      })
       .where('id', params.id)
       .rename()
       .fetch()
