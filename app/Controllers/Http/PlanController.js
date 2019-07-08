@@ -33,7 +33,7 @@ class PlanController {
     const data = request.all()
     const update = await Plan.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

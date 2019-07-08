@@ -33,7 +33,7 @@ class TicketController {
     const data = request.all()
     const update = await Ticket.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

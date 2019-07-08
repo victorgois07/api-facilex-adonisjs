@@ -7,6 +7,7 @@ class GroupUserController {
     // eslint-disable-next-line no-return-await
     return await GroupUser.query()
       .orderBy('id', 'desc')
+      .setVisible(['id', 'descricao', 'criado', 'atualizado'])
       .rename()
       .fetch()
   }
@@ -21,6 +22,7 @@ class GroupUserController {
     // eslint-disable-next-line no-return-await
     return await GroupUser.query()
       .orderBy('id', 'desc')
+      .setVisible(['id', 'descricao', 'criado', 'atualizado'])
       .with('user', builder => {
         builder.rename()
       })
@@ -33,7 +35,7 @@ class GroupUserController {
     const data = request.all()
     const update = await GroupUser.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

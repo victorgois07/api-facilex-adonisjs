@@ -33,7 +33,7 @@ class StateController {
     const data = request.all()
     const update = await State.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 
