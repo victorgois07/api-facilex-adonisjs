@@ -36,7 +36,7 @@ class EntityPlanController {
     const data = request.all()
     const update = await EntityPlan.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

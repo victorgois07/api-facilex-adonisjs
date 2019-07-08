@@ -21,12 +21,6 @@ class AddressController {
     // eslint-disable-next-line no-return-await
     return await Address.query()
       .orderBy('id', 'desc')
-      .with('entity', builder => {
-        builder.rename()
-      })
-      .with('city', builder => {
-        builder.rename()
-      })
       .where('id', params.id)
       .rename()
       .fetch()
@@ -36,7 +30,7 @@ class AddressController {
     const data = request.all()
     const update = await Address.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

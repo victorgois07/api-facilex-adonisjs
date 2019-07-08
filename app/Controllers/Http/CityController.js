@@ -36,7 +36,7 @@ class CityController {
     const data = request.all()
     const update = await City.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 
