@@ -21,9 +21,6 @@ class EntityController {
     // eslint-disable-next-line no-return-await
     return await Entity.query()
       .orderBy('id', 'desc')
-      .with('entityPlan', builder => {
-        builder.rename()
-      })
       .with('address', builder => {
         builder.rename()
       })
@@ -36,7 +33,7 @@ class EntityController {
     const data = request.all()
     const update = await Entity.find(params.id)
     update.merge(data)
-    update.update()
+    update.save()
     return update
   }
 

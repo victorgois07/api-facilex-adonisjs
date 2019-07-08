@@ -21,9 +21,6 @@ class PlanController {
     // eslint-disable-next-line no-return-await
     return await Plan.query()
       .orderBy('id', 'desc')
-      .with('entityPlan', builder => {
-        builder.rename()
-      })
       .where('id', params.id)
       .rename()
       .fetch()

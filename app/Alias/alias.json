@@ -3,7 +3,7 @@
     "id",
     "description as descricao",
     "neighborhood as bairro",
-    "number as numbero",
+    "number as numero",
     "cep",
     "city_id",
     "created_at as criado",
