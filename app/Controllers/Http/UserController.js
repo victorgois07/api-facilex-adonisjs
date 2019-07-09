@@ -8,6 +8,9 @@ class UserController {
     return await User.query()
       .orderBy('id', 'desc')
       .rename()
+      .with('groupUser', builder => {
+        builder.rename()
+      })
       .fetch()
   }
 
