@@ -5,7 +5,7 @@
     "neighborhood as bairro",
     "number as numero",
     "cep",
-    "comlement as complemento",
+    "complement as complemento",
     "city as cidade",
     "state as estado",
     "created_at as criado",
