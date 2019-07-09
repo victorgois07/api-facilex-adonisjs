@@ -6,6 +6,9 @@
     "number as numero",
     "cep",
     "city_id",
+    "comlement as complemento",
+    "city as cidade",
+    "state as estado",
     "created_at as criado",
     "updated_at as atualizado"
   ],
