@@ -138,6 +138,7 @@
     "email",
     "phone",
     "course_id",
+    "entity_id",
     "group_user_id",
     "created_at as criado",
     "updated_at as atualizado"

@@ -30,12 +30,20 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
+  log () {
+    return this.hasMany('App/Models/Log')
+  }
+
   course () {
     return this.belongsTo('App/Models/Course', 'course_id', 'id')
   }
 
   groupUser () {
     return this.belongsTo('App/Models/GroupUser', 'group_user_id', 'id')
+  }
+
+  entity () {
+    return this.belongsTo('App/Models/Entity', 'entity_id', 'id')
   }
 }
 

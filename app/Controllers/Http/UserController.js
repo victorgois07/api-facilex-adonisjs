@@ -1,6 +1,7 @@
 'use strict'
 
 const User = use('App/Models/User')
+const Log = use('App/Models/Log')
 
 class UserController {
   async index () {
@@ -48,7 +49,9 @@ class UserController {
 
   async destroy ({ params }) {
     const destroy = await User.find(params.id)
-    return destroy.delete()
+    await destroy.log().delete()
+    await destroy.delete()
+    return destroy
   }
 }
 
