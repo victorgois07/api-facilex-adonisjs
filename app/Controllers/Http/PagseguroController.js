@@ -15,7 +15,7 @@ class PagseguroController {
 
   async store ({ request, response, auth }) {
     return new Promise(async (resolve, reject) => {
-      const { valorBoleto, valorCreditar, plan_id,  entity_id, vencimento, desconto, quantidade_licencas } = request.all()
+      const { valorBoleto, valorCreditar, plan_id,  entity_id, quantidade_licencas } = request.all()
       const user = await User.find(auth.current.user.id)
       axios({
         method: 'POST',
