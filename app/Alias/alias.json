@@ -27,6 +27,9 @@
   ],
   "plan": [
     "id",
+    "discount as desconto",
+    "amount as valor",
+    "expiration_date as vencimento",
     "description as descricao",
     "created_at as criado",
     "updated_at as atualizado"
@@ -87,13 +90,12 @@
   ],
   "entity_plan": [
     "id",
-    "expiration_date as vencimento",
-    "expiration_promotion as promocao_vencimento",
-    "licenses_quality as quantidade_licencas",
-    "discount as desconto",
-    "active as ativo",
     "entity_id",
     "plan_id",
+    "expiration_promotion as promocao_vencimento",
+    "token",
+    "licenses_quality as quantidade_licencas",
+    "payment_id",
     "created_at as criado",
     "updated_at as atualizado"
   ],

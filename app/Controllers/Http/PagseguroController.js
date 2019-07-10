@@ -5,6 +5,8 @@ const moment = require('moment')
 const axios = require('axios')
 const User = use('App/Models/User')
 const Payment = use('App/Models/Payment')
+const EntityPlan = use('App/Models/EntityPlan')
+const crypto = require('crypto')
 
 class PagseguroController {
   async index ({ request, response, view }) {}
@@ -13,7 +15,7 @@ class PagseguroController {
 
   async store ({ request, response, auth }) {
     return new Promise(async (resolve, reject) => {
-      const { valorBoleto, valorCreditar } = request.all()
+      const { valorBoleto, valorCreditar, plan_id,  entity_id, vencimento, desconto, quantidade_licencas } = request.all()
       const user = await User.find(auth.current.user.id)
       axios({
         method: 'POST',
@@ -52,13 +54,20 @@ class PagseguroController {
       })
         .then(async res => {
           const boleto = res.data.boletos[0]
-          await Payment.create({
+          const payment = await Payment.create({
             code: boleto.code,
             payment_link: boleto.paymentLink,
             barcode: boleto.barcode,
             due_date: boleto.dueDate,
             value: valorBoleto,
             user_id: auth.current.user.id
+          })
+          await EntityPlan.create({
+            entity_id: entity_id,
+            plan_id: plan_id,
+            payment_id: payment.id,
+            licenses_quality: quantidade_licencas,
+            token: crypto.randomBytes(10).toString('hex')
           })
           resolve(boleto)
         })
