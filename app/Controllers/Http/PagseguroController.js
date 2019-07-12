@@ -15,7 +15,7 @@ class PagseguroController {
 
   async store ({ request, response, auth }) {
     return new Promise(async (resolve, reject) => {
-      const { valorBoleto, valorCreditar, plan_id,  entity_id, quantidade_licencas } = request.all()
+      const { valorBoleto, valorCreditar, plan_id, entity_id, quantidade_licencas , vencimento} = request.all()
       const user = await User.find(auth.current.user.id)
       axios({
         method: 'POST',
@@ -62,17 +62,22 @@ class PagseguroController {
             value: valorBoleto,
             user_id: auth.current.user.id
           })
+          const paymentJson = payment.toJSON()
+          const token = crypto.randomBytes(10).toString('hex')
           await EntityPlan.create({
             entity_id: entity_id,
             plan_id: plan_id,
-            payment_id: payment.id,
+            payment_id: paymentJson.id,
             licenses_quality: quantidade_licencas,
-            token: crypto.randomBytes(10).toString('hex')
+            token: token
           })
+          boleto.token = token
+          // eslint-disable-next-line camelcase
+          boleto.quantidade_licencas = quantidade_licencas
           resolve(boleto)
         })
         .catch(async e => {
-          resolve(await e.response.data)
+          reject(new Error('Error Durante a criação do boleto!! Valor verifique os dados ou entre em contato com a equipe responsável!!'))
         })
     })
   }

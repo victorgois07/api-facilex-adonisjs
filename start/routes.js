@@ -3,6 +3,7 @@
 const Route = use('Route')
 
 Route.post('/api/sessions', 'SessionController.store')
+Route.post('/api/ckeck/token', 'SessionController.checkToken')
 Route.post('/api/redirect/pagseguro', 'PagseguroController.redirectPagSeguro')
 
 Route.group(() => {

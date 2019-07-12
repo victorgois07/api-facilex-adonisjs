@@ -11,13 +11,14 @@ class ExceptionHandler extends BaseExceptionHandler {
       return response.status(error.status).send(error.messages)
     }
 
+    const younch = new Youch(error, request.request)
+    const errorJSON = await younch.toJSON()
+
     if (Env.get('NODE_ENV') === 'development') {
-      const younch = new Youch(error, request.request)
-      const errorJSON = await younch.toJSON()
       return response.status(error.status).send(errorJSON)
     }
-
-    return response.status(error.status).send(error)
+    console.log(error.Error)
+    return response.status(error.status).send({ message: errorJSON.error.message.split(' - ').length === 2 ? errorJSON.error.message.split(' - ')[1] : errorJSON.error.message })
   }
 
   async report (error, { request }) {

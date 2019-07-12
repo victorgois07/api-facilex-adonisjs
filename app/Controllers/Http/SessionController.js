@@ -1,7 +1,10 @@
 'use strict'
 
 const User = use('App/Models/User')
+const Plan = use('App/Models/Plan')
 const Log = use('App/Models/Log')
+const EntityPlan = use('App/Models/EntityPlan')
+const moment = require('moment')
 
 class SessionController {
   async store ({ request, response, auth }) {
@@ -28,6 +31,31 @@ class SessionController {
       token: token.token,
       user: user[0]
     })
+  }
+
+  async checkToken ({ request, response, auth }) {
+    const { token } = request.all()
+    const ckeckExist = await EntityPlan.query().where('token', token).getCount()
+    if (ckeckExist < 1) {
+      return response.status(401).send({ message: 'Token inválido!!' })
+    }
+    const entityPlan = (await EntityPlan.query().where('token', token).fetch()).toJSON()[0]
+    const venPlan = (await Plan.query().where('id', entityPlan.plan_id).fetch()).toJSON()[0]
+
+    const venc = new Date(venPlan.expiration_date)
+    const now = new Date()
+
+    const diff = venc.getDate() - now.getDate()
+
+    if (diff < 0) {
+      return response.status(401).send({ message: 'O Plano já venceu!!' })
+    }
+
+    const planEntity = await EntityPlan.find(entityPlan.id)
+    planEntity.merge({ licenses_quality: (entityPlan.licenses_quality - 1) })
+    planEntity.save()
+
+    return response.status(200).send({ message: 'Token Válido!!' })
   }
 }
 
